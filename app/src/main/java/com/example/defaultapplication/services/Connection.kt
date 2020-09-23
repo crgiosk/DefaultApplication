@@ -11,7 +11,9 @@ internal object Connection {
 
     internal fun send(endpoint: Endpoint, values: MutableMap<String, Any>, completion: (ConnectionResponse) -> Unit) {
         val client = OkHttpClient()
-        val url = "https://omdbapi.com/?s=Cars&apikey=5d690030"
+
+        //val url = "https://omdbapi.com/?s=Cars&apikey=5d690030"
+        val url = "https://${endpoint.base}/${endpoint.path}"
         val request = Request.Builder()
             .url(url)
             .build()

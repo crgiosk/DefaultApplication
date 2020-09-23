@@ -3,7 +3,6 @@ package com.example.defaultapplication.models
 import com.example.defaultapplication.core.Constants
 import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.services.*
-import com.example.defaultapplication.services.Connection
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -45,20 +44,20 @@ class MovieModel {
                     }
                 }
                 is ConnectionResponse.OnFailure -> {
-                    val error = "PR4000 , ${Connection.ERROR_SECURITY}, null)"
+                    val error = "PR4000 , ${Connection.ERROR_SECURITY}, OnFailure)"
                     completion(ModelResponse.OnError(error))
                 }
                 is ConnectionResponse.OnResponseUnsuccessful -> {
                     if (response.code == 412) {
-                        val error = "PR4002 , ${Connection.ERROR_SECURITY}, null)"
+                        val error = "PR4002 , ${Connection.ERROR_SECURITY}, OnResponseUnsuccessful)"
                         completion(ModelResponse.OnError(error))
                     } else {
-                        val error = "PR4003 , ${Connection.ERROR_SECURITY}, null)"
+                        val error = "PR4003 , ${Connection.ERROR_SECURITY}, OnResponseUnsuccessful)"
                         completion(ModelResponse.OnError(error))
                     }
                 }
                 is ConnectionResponse.OnInvalidData -> {
-                    val error = "PR4001 , ${Connection.ERROR_SECURITY}, null)"
+                    val error = "PR4001 , ${Connection.ERROR_SECURITY}, OnInvalidData)"
                     completion(ModelResponse.OnError(error))
                 }
             }

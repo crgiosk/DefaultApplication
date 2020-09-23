@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DefaultApplication</string>
+
+
+    <!-- Movie-->
+    <string name="hint_textview_search_movie">Search Your Movie</string>
+    <string name="title_button_search">Search</string>
 </resources>

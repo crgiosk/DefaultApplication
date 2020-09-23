@@ -1,10 +1,9 @@
-package com.example.defaultapplication.UI.viewmodels
+package com.example.defaultapplication.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.models.MovieModel
 import com.example.defaultapplication.services.ModelResponse
 import com.example.defaultapplication.services.UIState
@@ -27,7 +26,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 is ModelResponse.OnError -> {
-                    getMoviesMutableLiveData.postValue(UIState.OnSuccess(response.error))
+                    getMoviesMutableLiveData.postValue(UIState.OnError(response.error))
                 }
             }
         }
