@@ -39,20 +39,20 @@ class MovieModel {
                             completion(ModelResponse.OnError(decoded.error!!))
                         }
                     } catch (e: Exception) {
-                        val error = "PR4001 , ${Connection.ERROR_SECURITY}, ${e.message})"
+                        val error = "PR4001 , ${Connection.ERROR_SECURITY},Exception -> ${e.message})"
                         completion(ModelResponse.OnError(error))
                     }
                 }
                 is ConnectionResponse.OnFailure -> {
-                    val error = "PR4000 , ${Connection.ERROR_SECURITY}, OnFailure)"
+                    val error = "PR4000 , ${Connection.ERROR_CONNECTION}, OnFailure)"
                     completion(ModelResponse.OnError(error))
                 }
                 is ConnectionResponse.OnResponseUnsuccessful -> {
                     if (response.code == 412) {
-                        val error = "PR4002 , ${Connection.ERROR_SECURITY}, OnResponseUnsuccessful)"
+                        val error = "PR4002 , ${Connection.ERROR_SERVER}, OnResponseUnsuccessful 412"
                         completion(ModelResponse.OnError(error))
                     } else {
-                        val error = "PR4003 , ${Connection.ERROR_SECURITY}, OnResponseUnsuccessful)"
+                        val error = "PR4003 , ${Connection.ERROR_SERVER}, OnResponseUnsuccessful)"
                         completion(ModelResponse.OnError(error))
                     }
                 }

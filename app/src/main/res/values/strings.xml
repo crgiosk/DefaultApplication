@@ -5,4 +5,7 @@
     <!-- Movie-->
     <string name="hint_textview_search_movie">Search Your Movie</string>
     <string name="title_button_search">Search</string>
+    <string name="title_alert_warning">Warning</string>
+    <string name="title_button_ok">Nice</string>
+    <string name="title_error">Error</string>
 </resources>

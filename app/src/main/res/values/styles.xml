@@ -5,8 +5,36 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/gray_88060F</item>
 
+
+        <item name="alertBackground">@color/white</item>
+
+        <item name="alertTextColorPrimary">@color/black</item>
+        <item name="alertTextColor">@color/blue_39AAFF</item>
         <item name="lineDecoration">@color/gray_D8E2E6</item>
     </style>
+
+    <!--
+** Theme Dialog
+-->
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:textColorPrimary">?attr/alertTextColorPrimary</item>
+        <item name="android:textColor">?attr/alertTextColor</item>
+        <item name="android:windowBackground">@drawable/border_radius_alert_dialog</item>
+        <!-- Landscape -->
+        <item name="android:windowMinWidthMajor">50%</item>
+        <!-- Portrait -->
+        <item name="android:windowMinWidthMinor">70%</item>
+    </style>
+
+    <style name="FullScreenDialogTheme" parent="android:Theme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <!--
+    ** End Theme Dialog
+    -->
 
 </resources>

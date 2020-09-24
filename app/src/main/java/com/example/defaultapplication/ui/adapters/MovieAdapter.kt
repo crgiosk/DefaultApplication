@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.defaultapplication.R
+import com.example.defaultapplication.core.GlideApp
 import com.example.defaultapplication.entities.Movie
 import kotlinx.android.synthetic.main.item_movie.view.*
 
@@ -57,7 +57,7 @@ class MovieAdapter(
                 .centerCrop()
                 .circleCrop()
 
-            Glide.with(context)
+            GlideApp.with(context)
                 .load(item.poster)
                 .apply(options)
                 .into(itemView.posterMovieImageView)

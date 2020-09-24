@@ -4,8 +4,16 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <!-- neutral colors -->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
 
     <!-- myColors -->
-
+    <color name="gray_88060F">#88060F</color>
     <color name="gray_D8E2E6">#D8E2E6</color>
+    <color name="gray_969A9C">#969A9C</color>
+    <color name="gray_B28E8080">#B28E8080</color>
+    <color name="blue_207ADC">#207ADC</color>
+    <color name="blue_39AAFF">#39AAFF</color>
 </resources>

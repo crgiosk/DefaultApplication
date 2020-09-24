@@ -8,10 +8,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.defaultapplication.core.Utilities
 import com.example.defaultapplication.ui.viewmodels.MovieViewModel
 import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.services.UIState
 import com.example.defaultapplication.ui.adapters.MovieAdapter
+import com.example.defaultapplication.ui.widgets.LoadingDialog
 import com.example.defaultapplication.ui.widgets.MyDividerItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,23 +25,28 @@ class MainActivity : AppCompatActivity() {
     //adapters
     private lateinit var movieAdapter: MovieAdapter
 
+    // Dialogs
+    private var loadingDialog: LoadingDialog? = null
+
     private fun handlerGetMovie(status: UIState) {
         when (status) {
             is UIState.OnLoading -> {
-
+                showLoading("Cargando sus peliculas.")
             }
 
             is UIState.OnSuccess<*> -> {
+                hideLoading()
                 val data = (status.data as Array<Movie>).toMutableList()
-                movieAdapter.setData(data)
+                if (!(data.isNullOrEmpty())){
+                    movieAdapter.setData(data)
+                }else{
+                    Utilities.showAlertDialog(this, "Empty data, try again.", R.string.title_alert_warning)
+                }
             }
 
             is UIState.OnError -> {
-                Toast.makeText(
-                    this,
-                    "Error ${status.error}",
-                    Toast.LENGTH_LONG
-                ).show()
+                hideLoading()
+                Utilities.showAlertDialog(this, status.error, R.string.title_error)
             }
         }
     }
@@ -89,6 +96,27 @@ class MainActivity : AppCompatActivity() {
         searchButton.onClickListener()
 
     }
+
+    /**
+     * Show Loading
+     */
+    private fun showLoading(message: String) {
+        if (loadingDialog == null) {
+            loadingDialog = LoadingDialog.newInstance(message)
+            loadingDialog!!.show(supportFragmentManager, LoadingDialog.TAG)
+        }
+    }
+
+    /**
+     * Hide Loading
+     */
+    private fun hideLoading() {
+        if (loadingDialog != null) {
+            loadingDialog!!.dismiss()
+            loadingDialog = null
+        }
+    }
+
 
     private fun View.onClickListener() {
         this.setOnClickListener {
