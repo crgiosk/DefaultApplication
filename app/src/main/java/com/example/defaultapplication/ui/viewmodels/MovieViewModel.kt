@@ -14,7 +14,6 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
 
     private val getMoviesMutableLiveData: MutableLiveData<UIState> = MutableLiveData()
 
-
     fun getMoviesLiveData(): LiveData<UIState> = getMoviesMutableLiveData
 
     fun getMovies(title: String) {

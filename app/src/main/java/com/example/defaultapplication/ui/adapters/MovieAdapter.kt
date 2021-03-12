@@ -10,6 +10,7 @@ import com.example.defaultapplication.R
 import com.example.defaultapplication.core.GlideApp
 import com.example.defaultapplication.entities.Movie
 import kotlinx.android.synthetic.main.item_movie.view.*
+import java.util.*
 
 class MovieAdapter(
     private val context: Context,
@@ -29,8 +30,6 @@ class MovieAdapter(
     fun setData(data: MutableList<Movie>){
         this.moviesList.clear()
         this.moviesList.addAll(data)
-        //if you delete this line, data wont show
-        //notifyDataSetChanged()
         notifyDataSetChanged()
     }
 

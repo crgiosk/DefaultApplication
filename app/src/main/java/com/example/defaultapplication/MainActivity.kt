@@ -69,10 +69,10 @@ class MainActivity : AppCompatActivity() {
     private fun initAdapters() {
         movieAdapter = MovieAdapter(context = this,
 
-            clickClosure = { movie ->
+            clickClosure = {
                 Toast.makeText(
                     this,
-                    "You clicked the moview ${movie.title} - ${movie.year}",
+                    "You clicked the moview ${it.title} - ${it.year}",
                     Toast.LENGTH_LONG
                 ).show()
             },
@@ -123,7 +123,12 @@ class MainActivity : AppCompatActivity() {
             when (it.id) {
                 searchButton.id -> {
                     if (!(textView.text.isNullOrEmpty())) {
-                        movieViewModel.getMovies(textView.text.toString().trim())
+                        movieViewModel.getMovies(
+                            textView.text.toString().trim()
+                        )
+
+                        textView.hint = "test"
+
                     }
                 }
             }

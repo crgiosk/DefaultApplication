@@ -2,6 +2,7 @@ package com.example.defaultapplication.services
 
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
+import java.io.Serializable
 
 @Keep
 data class ServerResponse<Data>(
@@ -16,4 +17,4 @@ data class ServerResponse<Data>(
     @Json(name = "totalResults")
     @field:Json(name = "totalResults")
     var error: String?
-)
+): Serializable
