@@ -45,4 +45,7 @@ dependencies {
     //kapts app
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //klaxon, handler jsonToClass
+    implementation 'com.beust:klaxon:5.0.1'
+
 }
