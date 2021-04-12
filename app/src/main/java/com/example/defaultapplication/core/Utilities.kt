@@ -1,9 +1,17 @@
 package com.example.defaultapplication.core
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.Gravity
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.defaultapplication.R
 
 object Utilities {
@@ -31,4 +39,26 @@ object Utilities {
         titleView?.textSize = 18F
     }
 
+
+}
+
+@BindingAdapter("android:loadImage")
+fun ImageView.loadImage(imageUrl: String?) {
+    val view  = this
+    Glide.with(this.context)
+        .asBitmap()
+        .load(imageUrl).apply(RequestOptions().circleCrop())
+        .into(object : CustomTarget<Bitmap>() {
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                view.setImageDrawable(errorDrawable)
+            }
+            override fun onLoadCleared(placeholder: Drawable?) {
+                view.setImageDrawable(placeholder)
+            }
+
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                view.setImageBitmap(resource)
+            }
+        })
 }

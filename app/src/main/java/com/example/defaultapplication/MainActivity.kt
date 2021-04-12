@@ -2,6 +2,7 @@ package com.example.defaultapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -9,18 +10,23 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.defaultapplication.core.Utilities
+import com.example.defaultapplication.core.observeEvent
+import com.example.defaultapplication.databinding.ActivityMainBinding
 import com.example.defaultapplication.ui.viewmodels.MovieViewModel
 import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.services.UIState
 import com.example.defaultapplication.ui.adapters.MovieAdapter
+import com.example.defaultapplication.ui.viewmodels.MovieBindingViewModel
 import com.example.defaultapplication.ui.widgets.LoadingDialog
 import com.example.defaultapplication.ui.widgets.MyDividerItemDecoration
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var activityMainBinding: ActivityMainBinding
+
     //viewModels
     private lateinit var movieViewModel: MovieViewModel
+    private var movieBindingViewModel: MovieBindingViewModel? = null
 
     //adapters
     private lateinit var movieAdapter: MovieAdapter
@@ -38,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                 hideLoading()
                 val data = (status.data as Array<Movie>).toMutableList()
                 if (!(data.isNullOrEmpty())){
-                    movieAdapter.setData(data)
+                    //movieAdapter.setData(data)
+                    movieBindingViewModel?.setCouponsInRecyclerAdapter(data)
                 }else{
                     Utilities.showAlertDialog(this, "Empty data, try again.", R.string.title_alert_warning)
                 }
@@ -53,21 +60,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        activityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+
+        movieBindingViewModel = ViewModelProviders.of(this).get(MovieBindingViewModel::class.java)
+
+
+        activityMainBinding.movieViewModel = movieBindingViewModel
+        setContentView(activityMainBinding.root)
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel(this.application)::class.java)
 
-        movieViewModel.getMoviesLiveData().observe(this, Observer {
+        movieViewModel.getMoviesLiveData().observeEvent(this) {
             handlerGetMovie(it)
-        })
+        }
 
         initAdapters()
 
         listenerEventsClick()
+        movieBindingViewModel?.setContext(this)
     }
 
     private fun initAdapters() {
-        movieAdapter = MovieAdapter(context = this,
+/*        movieAdapter = MovieAdapter(context = this,
 
             clickClosure = {
                 Toast.makeText(
@@ -82,18 +96,18 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        moviesRecyclerView.run {
+        activityMainBinding.moviesRecyclerView.run {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
             addItemDecoration(
                 MyDividerItemDecoration(context, R.drawable.line_decoration)
             )
-        }
+        }*/
     }
 
     private fun listenerEventsClick() {
-        searchButton.onClickListener()
+        activityMainBinding.searchButton.onClickListener()
 
     }
 
@@ -121,13 +135,13 @@ class MainActivity : AppCompatActivity() {
     private fun View.onClickListener() {
         this.setOnClickListener {
             when (it.id) {
-                searchButton.id -> {
-                    if (!(textView.text.isNullOrEmpty())) {
+                activityMainBinding.searchButton.id -> {
+                    if (!(activityMainBinding.textView.text.isNullOrEmpty())) {
                         movieViewModel.getMovies(
-                            textView.text.toString().trim()
+                            activityMainBinding.textView.text.toString().trim()
                         )
 
-                        textView.hint = "test"
+                        activityMainBinding.textView.hint = "test"
 
                     }
                 }
