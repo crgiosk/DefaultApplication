@@ -1,6 +1,10 @@
 package com.example.defaultapplication.core
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.beust.klaxon.Klaxon
+import com.example.defaultapplication.services.Event
 import com.example.defaultapplication.services.ModelResponse
 import com.example.defaultapplication.services.ServerResponse
 import com.squareup.moshi.JsonAdapter
@@ -53,4 +57,8 @@ inline fun <reified T> Type.parseTo(json: String): ModelResponse<T>  {
     } catch (e: Exception) {
         ModelResponse.OnError("$errorCode Incompatible Data,${e.message}")
     }
+}
+
+inline fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner, crossinline onEventUnhandledContent: (T) -> Unit) {
+    observe(owner, Observer { it?.getContentIfNotHandled()?.let(onEventUnhandledContent) })
 }

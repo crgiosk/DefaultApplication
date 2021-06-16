@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.defaultapplication.core.Utilities
+import com.example.defaultapplication.core.observeEvent
 import com.example.defaultapplication.ui.viewmodels.MovieViewModel
 import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.services.UIState
@@ -57,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel(this.application)::class.java)
 
-        movieViewModel.getMoviesLiveData().observe(this, Observer {
+        movieViewModel.getMoviesLiveData().observeEvent(this) {
             handlerGetMovie(it)
-        })
+        }
 
         initAdapters()
 
