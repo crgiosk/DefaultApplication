@@ -14,7 +14,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.lang.reflect.Type
 import kotlin.reflect.KClass
 
-inline fun <reified T> Type.parseTo(json: String): ModelResponse  {
+inline fun <reified T> Type.parseTo(json: String): ModelResponse<T>  {
 
     return try {
         val myMosh = Moshi.Builder()
@@ -37,7 +37,7 @@ inline fun <reified T> Type.parseTo(json: String): ModelResponse  {
 }
 
 
- inline fun <reified T> String.parseJsonStringToClass(errorCode: String): ModelResponse  {
+ inline fun <reified T> String.parseJsonStringToClass(errorCode: String): ModelResponse<T> {
 
     return try {
         val myMosh = Moshi.Builder()
@@ -54,16 +54,6 @@ inline fun <reified T> Type.parseTo(json: String): ModelResponse  {
             ModelResponse.OnError(data.error!!)
         }
 
-    } catch (e: Exception) {
-        ModelResponse.OnError("$errorCode Incompatible Data,${e.message}")
-    }
-}
-
-
-inline fun <reified T> String.fromJson(errorCode: String): ModelResponse {
-
-    return try {
-        ModelResponse.OnSuccess(Klaxon().parse<T>(this))
     } catch (e: Exception) {
         ModelResponse.OnError("$errorCode Incompatible Data,${e.message}")
     }

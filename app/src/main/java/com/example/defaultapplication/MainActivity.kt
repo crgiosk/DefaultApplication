@@ -4,21 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.defaultapplication.core.Utilities
-import com.example.defaultapplication.core.observeEvent
 import com.example.defaultapplication.databinding.ActivityMainBinding
+import com.example.defaultapplication.core.observeEvent
 import com.example.defaultapplication.ui.viewmodels.MovieViewModel
 import com.example.defaultapplication.entities.Movie
 import com.example.defaultapplication.services.UIState
 import com.example.defaultapplication.ui.adapters.MovieAdapter
 import com.example.defaultapplication.ui.viewmodels.MovieBindingViewModel
 import com.example.defaultapplication.ui.widgets.LoadingDialog
-import com.example.defaultapplication.ui.widgets.MyDividerItemDecoration
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,15 +29,15 @@ class MainActivity : AppCompatActivity() {
     // Dialogs
     private var loadingDialog: LoadingDialog? = null
 
-    private fun handlerGetMovie(status: UIState) {
+    private fun handlerGetMovie(status: UIState<MutableList<Movie>>) {
         when (status) {
             is UIState.OnLoading -> {
                 showLoading("Cargando sus peliculas.")
             }
 
-            is UIState.OnSuccess<*> -> {
+            is UIState.OnSuccess -> {
                 hideLoading()
-                val data = (status.data as Array<Movie>).toMutableList()
+                val data = status.data
                 if (!(data.isNullOrEmpty())){
                     //movieAdapter.setData(data)
                     movieBindingViewModel?.setCouponsInRecyclerAdapter(data)

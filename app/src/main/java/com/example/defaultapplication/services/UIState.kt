@@ -1,7 +1,7 @@
 package com.example.defaultapplication.services
 
-sealed class UIState {
-    object OnLoading: UIState()
-    class OnSuccess<Data>(val data: Data): UIState()
-    class OnError(val error: String): UIState()
+sealed class UIState<out T> {
+    object OnLoading: UIState<Nothing>()
+    class OnSuccess<Data>(val data: Data): UIState<Data>()
+    class OnError(val error: String): UIState<Nothing>()
 }

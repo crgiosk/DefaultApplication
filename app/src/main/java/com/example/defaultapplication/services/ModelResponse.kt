@@ -1,6 +1,6 @@
 package com.example.defaultapplication.services
 
-sealed class ModelResponse {
-    class OnSuccess<Data>(val result: Data) : ModelResponse()
-    class OnError(val error: String) : ModelResponse()
+sealed class ModelResponse<out T> {
+    class OnSuccess<Data>(val result: Data) : ModelResponse<Data>()
+    class OnError(val error: String) : ModelResponse<Nothing>()
 }

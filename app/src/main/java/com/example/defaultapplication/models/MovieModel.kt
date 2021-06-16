@@ -1,19 +1,14 @@
 package com.example.defaultapplication.models
 
 import com.example.defaultapplication.core.Constants
-import com.example.defaultapplication.core.fromJson
 import com.example.defaultapplication.core.parseJsonStringToClass
 import com.example.defaultapplication.entities.Movie
-import com.example.defaultapplication.services.*
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.example.defaultapplication.services.ModelResponse
+import com.example.defaultapplication.services.Endpoint
+import com.example.defaultapplication.services.ConnectionResponse
+import com.example.defaultapplication.services.Connection
 
 class MovieModel {
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
 
     private enum class Action : Endpoint {
         GET_MOVIE_BY_TITLE {
@@ -22,7 +17,7 @@ class MovieModel {
         }
     }
 
-    fun getMovieByTitle(title: String, completion: (ModelResponse) -> Unit) {
+    fun getMovieByTitle(title: String, completion: (ModelResponse<Array<Movie>>) -> Unit) {
         val values: MutableMap<String, Any> = mutableMapOf()
         values["apikey"] = Constants.APP_KEY
         values["t"] = title
@@ -31,7 +26,7 @@ class MovieModel {
             when (response) {
                 is ConnectionResponse.OnSuccess -> {
                     completion(
-                        response.result.parseJsonStringToClass<Array<Movie>>("HR001")
+                        response.result.parseJsonStringToClass("HR001")
                     )
                 }
                 is ConnectionResponse.OnFailure -> {
@@ -56,7 +51,7 @@ class MovieModel {
 
     }
 
-    fun getMovieByTitlse(title: String, completion: (ModelResponse) -> Unit) {
+    fun getMovieByTitlse(title: String, completion: (ModelResponse<Movie>) -> Unit) {
         val values: MutableMap<String, Any> = mutableMapOf()
         values["apikey"] = Constants.APP_KEY
         values["t"] = title
@@ -65,7 +60,7 @@ class MovieModel {
             when (response) {
                 is ConnectionResponse.OnSuccess -> {
                     completion(
-                        response.result.parseJsonStringToClass<Movie>("HR002")
+                        response.result.parseJsonStringToClass("HR002")
                     )
                 }
                 is ConnectionResponse.OnFailure -> {
