@@ -28,15 +28,15 @@ class MainActivity : AppCompatActivity() {
     // Dialogs
     private var loadingDialog: LoadingDialog? = null
 
-    private fun handlerGetMovie(status: UIState) {
+    private fun handlerGetMovie(status: UIState<MutableList<Movie>>) {
         when (status) {
             is UIState.OnLoading -> {
                 showLoading("Cargando sus peliculas.")
             }
 
-            is UIState.OnSuccess<*> -> {
+            is UIState.OnSuccess -> {
                 hideLoading()
-                val data = (status.data as Array<Movie>).toMutableList()
+                val data = status.data
                 if (!(data.isNullOrEmpty())){
                     movieAdapter.setData(data)
                 }else{

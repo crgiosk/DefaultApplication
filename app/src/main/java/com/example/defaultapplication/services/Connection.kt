@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 internal object Connection {
 
     const val ERROR_CONNECTION = "I am NOT detecting data connection, please check your network."
-    const val ERROR_SERVER = "Oops! Something went wrong.\n Feel free to reach us at support@mdcloudps.com, if the issue persists."
+    const val ERROR_SERVER = "Oops! Something went wrong.\n Feel free to reach us, if the issue persists."
     const val ERROR_SECURITY = "Oops! An error has occurred.\n You will need to restart the App and log back in. We apologize for the inconvenience."
 
     internal fun send(endpoint: Endpoint, values: MutableMap<String, Any>, completion: (ConnectionResponse) -> Unit) {
