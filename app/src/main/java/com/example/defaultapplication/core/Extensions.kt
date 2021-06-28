@@ -25,10 +25,10 @@ inline fun <reified T> Type.parseTo(json: String): ModelResponse<T>  {
         val jsonAdapter: JsonAdapter<ServerResponse<T>> = myMosh.adapter(typeA)
         val data = jsonAdapter.fromJson(json)!!
 
-        return if (data.status == "True") {
+        return if (data.status) {
             ModelResponse.OnSuccess(data.data!!)
         } else {
-            ModelResponse.OnError(data.error!!)
+            ModelResponse.OnError(data.error!!.toString())
         }
 
     } catch (e: Exception) {
@@ -48,10 +48,10 @@ inline fun <reified T> Type.parseTo(json: String): ModelResponse<T>  {
         val jsonAdapter: JsonAdapter<ServerResponse<T>> = myMosh.adapter(typeA)
         val data = jsonAdapter.fromJson(this)!!
 
-        return if (data.status == "True") {
+        return if (data.status) {
             ModelResponse.OnSuccess(data.data!!)
         } else {
-            ModelResponse.OnError(data.error!!)
+            ModelResponse.OnError(data.error!!.toString())
         }
 
     } catch (e: Exception) {

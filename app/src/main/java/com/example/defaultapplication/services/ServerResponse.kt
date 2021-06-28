@@ -2,19 +2,18 @@ package com.example.defaultapplication.services
 
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
-import java.io.Serializable
 
 @Keep
-data class ServerResponse<Data>(
-    @Json(name = "Response")
-    @field:Json(name = "Response")
-    var status: String?,
+data class ServerResponse<T>(
+        @Json(name = "status")
+        @field:Json(name = "status")
+        var status: Boolean,
 
-    @Json(name = "Search")
-    @field:Json(name = "Search")
-    var data: Data?,
+        @Json(name = "data")
+        @field:Json(name = "data")
+        var data: T?,
 
-    @Json(name = "totalResults")
-    @field:Json(name = "totalResults")
-    var error: String?
-): Serializable
+        @Json(name = "error")
+        @field:Json(name = "error")
+        var error: Error?
+)
